@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>TAKENDA | NUCLEAR PROJECT ACCESS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --primary-color: #00ff41; /* 매트릭스 그린 */
+            --bg-color: #0a0a0a;
+            --error-color: #ff3e3e;
+            --accent-color: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            font-family: 'Share Tech Mono', monospace;
+            overflow: hidden;
+        }
+
+        /* 글리치 애니메이션 */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(0, 255, 65, 0.1);
+            position: absolute;
+            top: 0;
+            z-index: 10;
+            animation: scanline 6s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        /* 인트로 섹션 */
+        #login-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            z-index: 20;
+            transition: opacity 1s ease;
+        }
+
+        .warning {
+            color: var(--error-color);
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 10px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        input {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px;
+            font-size: 1.5rem;
+            text-align: center;
+            outline: none;
+            width: 200px;
+        }
+
+        /* 메인 대시보드 */
+        #main-content {
+            display: none;
+            padding: 40px;
+            height: 100vh;
+            box-sizing: border-box;
+            grid-template-columns: 1fr 2fr;
+            grid-template-rows: auto 1fr;
+            gap: 20px;
+        }
+
+        header {
+            grid-column: 1 / span 2;
+            border-bottom: 1px solid var(--primary-color);
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .sidebar {
+            border: 1px solid var(--primary-color);
+            padding: 20px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .monitor {
+            border: 1px solid var(--primary-color);
+            padding: 20px;
+            background: rgba(0, 255, 65, 0.05);
+            overflow-y: auto;
+        }
+
+        .status-tag {
+            background: var(--primary-color);
+            color: black;
+            padding: 2px 5px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .glitch-text:hover {
+            animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+        }
+
+        .log-entry {
+            margin-bottom: 15px;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 10px;
+        }
+
+        .error-log {
+            color: var(--error-color);
+            border-color: var(--error-color);
+        }
+
+        h2 { border-bottom: 1px solid var(--primary-color); padding-bottom: 5px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="scanline"></div>
+
+    <div id="login-screen">
+        <div class="warning">UNAUTHORIZED ACCESS IS PROHIBITED BY INTERNATIONAL LAW</div>
+        <div class="logo">TAKENDA</div>
+        <div style="margin-bottom: 10px;">ENTER ACCESS KEY:</div>
+        <input type="password" id="passkey" maxlength="4" autofocus onkeyup="checkPass(this)">
+        <div id="login-msg" style="margin-top: 20px; font-size: 0.8rem;"></div>
+    </div>
+
+    <div id="main-content">
+        <header>
+            <div>
+                <span style="font-size: 1.5rem; font-weight: bold;">NUCLEAR PROJECT v.4.05</span><br>
+                <span>LOCATION_NODE: RUINED_SEOUL_SYST_01</span>
+            </div>
+            <div style="text-align: right;">
+                STATUS: <span style="color: var(--primary-color);">ACTIVE</span><br>
+                DATE: 2045-10-12
+            </div>
+        </header>
+
+        <aside class="sidebar">
+            <h2>PROJECT OVERVIEW</h2>
+            <p>> <b>목적:</b> 인류 위기 대응 능력 및 극단적 상황에서의 윤리적 판단 시뮬레이션</p>
+            <p>> <b>현황:</b> 대몰락(The Fall) 시나리오 가동 1,842일 경과</p>
+            <p>> <b>피실험체:</b> 204명 (생존율: 48.2%)</p>
+            <p>> <b>보안 등급:</b> Level 7 - Deep Black</p>
+            <br>
+            <h2 class="glitch-text" style="color: var(--error-color); cursor: help;">SYSTEM ANOMALY</h2>
+            <p style="font-size: 0.8rem; color: #888;">
+                최근 피실험체들 사이에서 '글리치' 목격 사례 증가. <br>
+                물리 엔진 오류 코드 701 발생 중. <br>
+                감시자(Observer) 유닛 추가 배치 완료.
+            </p>
+        </aside>
+
+        <main class="monitor">
+            <h2>LIVE SYSTEM LOGS</h2>
+            
+            <div class="log-entry">
+                <span class="status-tag">INFO</span> [11:22:04] 가상 기상 시스템 '강산성 비' 변수 적용 완료.
+            </div>
+
+            <div class="log-entry error-log">
+                <span class="status-tag" style="background: var(--error-color);">CRITICAL</span> [11:24:55] ERROR 701: '구역 04'에서 물리 법칙 동기화 실패. 깡통 부유 현상 보고됨.
+            </div>
+
+            <div class="log-entry">
+                <span class="status-tag">LOG</span> [11:30:12] 피실험체 '김용달', 폐허 내 '구시대 단말기' 접근 시도. 시스템 로그 노출 차단 성공.
+            </div>
+
+            <div class="log-entry">
+                <span class="status-tag">TRACE</span> [11:45:00] 감시자(Observer) Unit-09: '정착민 그룹' 내 갈등 유도 프로토콜 실행.
+            </div>
+
+            <div class="log-entry error-log">
+                <span class="status-tag" style="background: var(--error-color);">WARNING</span> [11:58:33] SYSTEM KERNEL: '날씨_변수' 강제 실행 오류. 수동 복구 필요.
+            </div>
+
+            <div class="log-entry">
+                <span class="status-tag">INFO</span> [12:00:01] 일일 자원(식량/식수) 부패 데이터 갱신율 98% 적용.
+            </div>
+
+            <div class="log-entry">
+                <span class="status-tag">LOG</span> [12:05:44] '그을린 자' 개체수 12% 증식 완료. 공포 지수 목표치 도달.
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function checkPass(input) {
+            const msg = document.getElementById('login-msg');
+            if (input.value === '2045') {
+                msg.innerHTML = "ACCESS GRANTED. REDIRECTING...";
+                msg.style.color = "var(--primary-color)";
+                
+                setTimeout(() => {
+                    document.getElementById('login-screen').style.opacity = '0';
+                    setTimeout(() => {
+                        document.getElementById('login-screen').style.display = 'none';
+                        document.getElementById('main-content').style.display = 'grid';
+                    }, 1000);
+                }, 1000);
+            } else if (input.value.length === 4) {
+                msg.innerHTML = "INVALID ACCESS KEY.";
+                msg.style.color = "var(--error-color)";
+                input.value = '';
+                
+                // 가짜 로딩 효과
+                setTimeout(() => { msg.innerHTML = ""; }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
